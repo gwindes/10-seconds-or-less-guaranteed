@@ -2,11 +2,17 @@ class Main
   constructor: () ->
     @scene = new THREE.Scene()
     @renderer = new THREE.WebGLRenderer( { antialias: true, alpha: false } )
-    @renderer.setClearColor(0x9C9C9C)
+    @renderer.setClearColor(0xff0000)
+    @renderer.setSize(window.innerWidth, window.innerHeight)
 
     @camera = new PerspectiveCamera( { width:window.innerWidth, height:window.innerHeight } )
 
     window.addEventListener( 'resize', @onWindowResize, false )
+
+    $("#container").empty()
+    $("#container").append(@renderer.domElement)
+
+    return @
 
   render: () ->
     @scene.updateMatrixWorld()
@@ -14,6 +20,7 @@ class Main
     @renderer.render(@scene, @camera)
 
   onWindowResize: () =>
+    console.log "window resize"
     @camera.aspect = window.innerWidth / window.innerHeight
     @camera.updateProjectionMatrix()
     @renderer.setSize( window.innerWidth, window.innerHeight )
