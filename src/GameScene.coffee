@@ -25,20 +25,19 @@ class GameScene extends Main
     @composer = new THREE.EffectComposer (@renderer)
     @composer.addPass(new THREE.RenderPass(@scene, @camera))
 
-    effect = new THREE.ShaderPass(THREE.DotScreenShader)
-    effect.uniforms['scale'].value = 4
-    @composer.addPass(effect)
+    # effect = new THREE.ShaderPass(THREE.DotScreenShader)
+    # effect.uniforms['scale'].value = 4
+    # @composer.addPass(effect)
 
-    effect = new THREE.ShaderPass( THREE.DotScreenShader );
-    effect.uniforms[ 'scale' ].value = 4;
-    @composer.addPass( effect );
+    @dotScreen = new THREE.ShaderPass( MyDotShader );
+    @dotScreen.uniforms[ 'scale' ].value = 4;
+    @dotScreen.renderToScreen = true
+    @composer.addPass( @dotScreen );
 
-    effect = new THREE.ShaderPass(THREE.RGBShiftShader)
-    effect.uniforms['amount'].value = 0.0015
-    effect.renderToScreen = true
-    @composer.addPass(effect)
-
-    
+    # effect = new THREE.ShaderPass(THREE.RGBShiftShader)
+    # effect.uniforms['amount'].value = 0.0015
+    # effect.renderToScreen = true
+    # @composer.addPass(effect)
 
     @onWindowResize()
 
@@ -49,9 +48,11 @@ class GameScene extends Main
 
   render: () ->
     @shader.uniforms.time.value += 0.05;
+    @dotScreen.uniforms['scale'].value += 0.1
+    # console.log "dotscren scale = #{@dotScreen.uniforms['scale'].value} "
     # @skybox.rotation.y += 0.01
-
     super()
     @composer.render()
+    
 
 window.GameScene = GameScene
