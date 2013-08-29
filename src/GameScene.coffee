@@ -2,8 +2,6 @@ class GameScene extends Main
   constructor: () ->
     super()
 
-    
-
     @skybox = new SkyBox('http://i.imgur.com/ip8dEgY.jpg')
     # @scene.add(@skybox)
 
@@ -15,10 +13,14 @@ class GameScene extends Main
     light.position.x = 5
     @scene.add(light)
 
-    @sprite = new Sprite('images/sprites/player.png', 3)
+    @playerSprite = new Sprite('images/sprites/pelican.png', 4, 64, 64, 100)
+    @playerSprite.lookAt(@camera.position)
+    @scene.add(@playerSprite)
 
-    @sprite.lookAt(@camera.position)
-    @scene.add(@sprite)
+    # @platform = new Sprite('images/sprites/platform.png', 60, 100, 64, 75)
+    # @platform.lookAt(@camera.position)
+    # @platform.position.y -= 50
+    # @scene.add(@platform)
 
     light = new ShadowedLight(pos={x:10, y:1, z:0})
     @scene.add(light)
@@ -32,14 +34,20 @@ class GameScene extends Main
 
   update: () ->
     delta = @clock.getDelta()
-    @sprite.spriteAnimator.update(delta)
+    @playerSprite.spriteAnimator.update(delta)
+    # @platform.spriteAnimator.update(delta)
+
+    # val = if  > 0 else 
+    @playerSprite.position.y = Math.max 0.0, Math.sin(10 * @clock.getElapsedTime())
+    console.log "player pos.y = #{@playerSprite.position.y}"
+
 
     if(@keyboard.pressed("w"))
       console.log "Pressed Z"
 
   render: () ->
     # @skybox.rotation.y += 0.01
-    # @sprite.lookAt(@camera.position) 
+    # @playerSprite.lookAt(@camera.position) 
     super()    
 
 window.GameScene = GameScene
