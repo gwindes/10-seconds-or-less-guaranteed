@@ -3,7 +3,7 @@ class Main
     @scene = new THREE.Scene()
     @renderer = new THREE.WebGLRenderer( { antialias: true, alpha: false } )
     # @renderer.setClearColor(0xf3f3f3)
-    @renderer.setClearColor(0x3c3c3c)
+    # @renderer.setClearColor(0x3c3c3c)
     @renderer.setSize(window.innerWidth, window.innerHeight)
 
     @camera = new PerspectiveCamera( { width:window.innerWidth, height:window.innerHeight } )
@@ -20,7 +20,7 @@ class Main
 
   render: () ->
     @scene.updateMatrixWorld()
-    @renderer.clear()
+    # @renderer.clear()
     @renderer.render(@scene, @camera)
 
   onWindowResize: () =>
